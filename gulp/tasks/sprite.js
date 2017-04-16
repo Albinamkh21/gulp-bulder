@@ -2,15 +2,15 @@
 
 module.exports = function() {
     $.gulp.task('sprite', function() {
-        var spriteData =  $.gulp.src('./source/images/icons/*.*')
+        var spriteData =  $.gulp.src('./source/spriteIcons/*.*')
             .pipe($.gp.spritesmith({
                     imgName: 'sprite.png',
-                    cssName: 'sprite.css',
+                    cssName: 'sprite.scss',
                     padding: 5
                 }));
-          //  .pipe($.gulp.dest($.config.root + '/assets/img/sprites'))
-        spriteData.img.pipe($.gulp.dest($.config.root + '/assets/img'));
-        return spriteData.css.pipe($.gulp.dest($.config.root + '/assets/css'));
+        var imgStream  =  spriteData.img.pipe($.gulp.dest('./source/images/'));
+        var cssStream  =  spriteData.css.pipe($.gulp.dest('./source/style/common/'));
+        return $.merge(imgStream, cssStream);
 
     })
 };
