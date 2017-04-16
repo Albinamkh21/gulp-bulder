@@ -1,0 +1,145 @@
+// SCSS variables are information about icon's compiled state, stored under its original file name
+//
+// .icon-home {
+//   width: $icon-home-width;
+// }
+//
+// The large array-like variables contain all information about a single icon
+// $icon-home: x y offset_x offset_y width height total_width total_height image_path;
+//
+// At the bottom of this section, we provide information about the spritesheet itself
+// $spritesheet: width height image $spritesheet-sprites;
+$git-na-name: 'git-na';
+$git-na-x: 70px;
+$git-na-y: 0px;
+$git-na-offset-x: -70px;
+$git-na-offset-y: 0px;
+$git-na-width: 30px;
+$git-na-height: 30px;
+$git-na-total-width: 100px;
+$git-na-total-height: 93px;
+$git-na-image: 'sprite.png';
+$git-na: (70px, 0px, -70px, 0px, 30px, 30px, 100px, 93px, 'sprite.png', 'git-na', );
+$git-name: 'git';
+$git-x: 0px;
+$git-y: 36px;
+$git-offset-x: 0px;
+$git-offset-y: -36px;
+$git-width: 30px;
+$git-height: 30px;
+$git-total-width: 100px;
+$git-total-height: 93px;
+$git-image: 'sprite.png';
+$git: (0px, 36px, 0px, -36px, 30px, 30px, 100px, 93px, 'sprite.png', 'git', );
+$sk-na-name: 'sk-na';
+$sk-na-x: 0px;
+$sk-na-y: 0px;
+$sk-na-offset-x: 0px;
+$sk-na-offset-y: 0px;
+$sk-na-width: 30px;
+$sk-na-height: 31px;
+$sk-na-total-width: 100px;
+$sk-na-total-height: 93px;
+$sk-na-image: 'sprite.png';
+$sk-na: (0px, 0px, 0px, 0px, 30px, 31px, 100px, 93px, 'sprite.png', 'sk-na', );
+$sk-name: 'sk';
+$sk-x: 35px;
+$sk-y: 0px;
+$sk-offset-x: -35px;
+$sk-offset-y: 0px;
+$sk-width: 30px;
+$sk-height: 31px;
+$sk-total-width: 100px;
+$sk-total-height: 93px;
+$sk-image: 'sprite.png';
+$sk: (35px, 0px, -35px, 0px, 30px, 31px, 100px, 93px, 'sprite.png', 'sk', );
+$vk-na-name: 'vk-na';
+$vk-na-x: 35px;
+$vk-na-y: 36px;
+$vk-na-offset-x: -35px;
+$vk-na-offset-y: -36px;
+$vk-na-width: 39px;
+$vk-na-height: 22px;
+$vk-na-total-width: 100px;
+$vk-na-total-height: 93px;
+$vk-na-image: 'sprite.png';
+$vk-na: (35px, 36px, -35px, -36px, 39px, 22px, 100px, 93px, 'sprite.png', 'vk-na', );
+$vk-name: 'vk';
+$vk-x: 0px;
+$vk-y: 71px;
+$vk-offset-x: 0px;
+$vk-offset-y: -71px;
+$vk-width: 39px;
+$vk-height: 22px;
+$vk-total-width: 100px;
+$vk-total-height: 93px;
+$vk-image: 'sprite.png';
+$vk: (0px, 71px, 0px, -71px, 39px, 22px, 100px, 93px, 'sprite.png', 'vk', );
+$spritesheet-width: 100px;
+$spritesheet-height: 93px;
+$spritesheet-image: 'sprite.png';
+$spritesheet-sprites: ($git-na, $git, $sk-na, $sk, $vk-na, $vk, );
+$spritesheet: (100px, 93px, 'sprite.png', $spritesheet-sprites, );
+
+// The provided mixins are intended to be used with the array-like variables
+//
+// .icon-home {
+//   @include sprite-width($icon-home);
+// }
+//
+// .icon-email {
+//   @include sprite($icon-email);
+// }
+//
+// Example usage in HTML:
+//
+// `display: block` sprite:
+// <div class="icon-home"></div>
+//
+// To change `display` (e.g. `display: inline-block;`), we suggest using a common CSS class:
+//
+// // CSS
+// .icon {
+//   display: inline-block;
+// }
+//
+// // HTML
+// <i class="icon icon-home"></i>
+@mixin sprite-width($sprite) {
+  width: nth($sprite, 5);
+}
+
+@mixin sprite-height($sprite) {
+  height: nth($sprite, 6);
+}
+
+@mixin sprite-position($sprite) {
+  $sprite-offset-x: nth($sprite, 3);
+  $sprite-offset-y: nth($sprite, 4);
+  background-position: $sprite-offset-x  $sprite-offset-y;
+}
+
+@mixin sprite-image($sprite) {
+  $sprite-image: nth($sprite, 9);
+  background-image: url(#{$sprite-image});
+}
+
+@mixin sprite($sprite) {
+  @include sprite-image($sprite);
+  @include sprite-position($sprite);
+  @include sprite-width($sprite);
+  @include sprite-height($sprite);
+}
+
+// The `sprites` mixin generates identical output to the CSS template
+//   but can be overridden inside of SCSS
+//
+// @include sprites($spritesheet-sprites);
+@mixin sprites($sprites) {
+  @each $sprite in $sprites {
+    $sprite-name: nth($sprite, 10);
+    .#{$sprite-name} {
+      @include sprite($sprite);
+    }
+  }
+}
